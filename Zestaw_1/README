@@ -1,0 +1,31 @@
+=========================================================================
+Autorka: Natalia Wlodyka,                              Krakow, 18.04.2025
+=========================================================================
+
+* Zawartosc:
+============
+
+Katolog Zestaw_2_Sortowanie zawiera programy wykonujace zadanie sortowanie 
+ciagu metoda sortowania przez scalanie oraz przez wystawianie.
+ 
+Katolog zawiera nastepujacy programy:
+	main.c - program glowny do testowania sortowania
+	wykluczanie.c - program do wzjamenego wykluczania
+  insertsort.h - plik naglowkowy do sortowania metoda wstawiania
+  mergesort.h - plik naglowkowy do sortowania metoda scalania
+-------------------------------------------------------------------------
+
+* Jak uruchomic program:
+========================
+
+Katalog zawiera program Makefile do kompilacji i linkowania
+powyzszych programow, a takze czyszczenia katalogu.
+
+
+-> Aby skompilowac program, nalezy w line polecen powloki wykonac:
+       make 
+            
+-> Aby wyczyscic zawartosc katalogu (usunac zbedne pliki), nalezy wykonac:
+       make clean
+
+==========================================================================
