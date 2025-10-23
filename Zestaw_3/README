@@ -1,0 +1,30 @@
+=========================================================================
+Autorka: Natalia Wlodyka,                              Krakow, 23.10.2025
+=========================================================================
+
+* Zawartosc:
+============
+
+Katolog Zestaw_3_ADT_LIST zawiera programy implementujace ADT LIST na bazie 
+tablicy o sta³ym rozmiarze (tablica statyczna), 
+ustalanym w czasie tworzenia listy.
+ 
+Katolog zawiera nastepujacy program:
+-	main.cpp - program wywolujacy i sprawdzajacy dzialanie klasy Arraylist.
+- arraylist.h - klasa ArrayList i jej metody.
+--------------------------------------------------------------------------
+
+* Jak uruchomic program:
+========================
+
+Katalog zawiera program Makefile do kompilacji, linkowania
+i uruchamiania powyzszych programow, a takze czyszczenia katalogu 
+i jego archiwizacji.
+
+-> Aby uruchomic program, nalezy w line polecen powloki wykonac:
+       make
+            
+-> Aby wyczyscic zawartosc katalogu (usunac zbedne pliki), nalezy wykonac:
+       make clean
+
+==========================================================================
