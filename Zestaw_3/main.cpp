@@ -19,7 +19,6 @@ int main(){
 	array1.push_back(10);
 	std :: cout <<"Wypisuje pierwsza liste:\n";
 	array1.display();
-		
 	
 	//Wypisuje dane o pierwszej tablicy
 	std::cout << "Na liscie sa " << array1.size() << " elementy\n"; 
@@ -28,13 +27,13 @@ int main(){
 	std:: cout << "Ostatni element listy pierwszej: " << array1.back() << "\n";
 	
 	//Sprawdzamy czy tablica sa puste czy pelne
-	if(array1.empty() == true){
+	if(array1.empty()){
 		std::cout << "Lista jest pusta!\n";
 	}
 	else std::cout << "Lista nie jest pusta!\n";
 	
-	if(array1.full() == true){
-		
+	if(array1.full()){
+		std::cout << "Lista jest pe³na!\n";
 	}
 	else std::cout << "Lista nie jest pelna! Pozostalo jesze: " << array1.max_size() - array1.size() << " miejsc\n";
 	
@@ -66,13 +65,21 @@ int main(){
 	
 	//Przenosznie nowego obiektu bez kopiowania;
 	ArrayList<int> array4(std::move(array2));
-	std :: cout <<"Wypisuje czwarta liste liste:\n";
+	std :: cout <<"Wypisuje czwarta liste:\n";
 	array4.display();
 	
 	ArrayList<int> array5;
 	array5 = std::move(array4);
-	std :: cout <<"Wypisuje piata liste liste:\n";
+	std :: cout <<"Wypisuje piata liste:\n";
 	array5.display();
+	
+	//Czyszczenie listy 
+	array1.clear();
+	std :: cout <<"Wypisuje pierwsza liste po usunieciu elementow:\n";
+	array1.display();
+	array1.push_back(1);
+	std :: cout << "Wypisuje piersza liste po dodaniu nowego elementu:\n";
+	array1.display();
 
 	return 0;
 }

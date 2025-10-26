@@ -38,7 +38,7 @@ public:
 		msize = other.msize;
 		last = other.last;
 		tab = new T[msize];
-		tab = other.tab;
+		std::copy(other.tab, other.tab + other.last, tab);
 		assert( tab != nullptr );
 			
 	}
@@ -63,12 +63,12 @@ public:
 	// copy assignment operator, return *this
     // usage:   list2 = list1;
     ArrayList& operator=(const ArrayList& other){
-   	msize = other.msize;
+		msize = other.msize;
 		last = other.last;
 		tab = new T[msize];
-		tab = other.tab;
-		
+		std::copy(other.tab, other.tab + other.last, tab);
 		assert( tab != nullptr );
+		return *this;
 	} 
 	
 	
@@ -187,10 +187,12 @@ public:
 		assert(tab[last] != a);	
 	}
 	
-	// czyszczenie listy z elementow
     void clear(){
     	assert(!empty());
-    	delete[] tab;
+    	for(int i = 0; i < last; i++){
+    		//delete tab[i];
+			tab[i] = 0;
+		}
 		last = 0;
 		assert(tab != nullptr);
 	}
@@ -247,6 +249,16 @@ public:
 			}
 		}
 		return true;
+	}
+	
+	//Dostep do elementu
+	T get(size_t i){
+		if(i >= last){
+			return -1;	
+		}
+		else{
+			return tab[i];
+		}
 	}
 
     friend std::ostream& operator<<(std::ostream& os, const ArrayList& L) {
