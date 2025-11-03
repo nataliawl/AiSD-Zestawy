@@ -5,27 +5,28 @@ CXX = g++
 # Flagi dla kompilatora C++.
 # Standardy: -std=c++11 -std=c++14 -std=c++17 -std=c++20 -std=c++23 -std=c++26
 CXXFLAGS = -Wall -std=c++11
-# Pliki obiektowe - powstaj¹ z plików *.cpp.
+# Pliki obiektowe - powstajÄ… z plikÃ³w *.cpp.
 OBJECTS = main.o 
-# Pliki nag³ówkowe - s¹ w³¹czane do plików *.cpp.
-HFILES = singlelist.h
-# Koñcowy plik wykonywalny.
+# Pliki nagÅ‚Ã³wkowe - sÄ… wÅ‚Ä…czane do plikÃ³w *.cpp.
+HFILES = doublelist.h
+# KoÅ„cowy plik wykonywalny.
 TARGET = main.out
 
-# Definicja domyœlnej regu³y wzorcowej.
-# $< oznacza nazwê pliku pierwszej zale¿noœci regu³y.
-# $@ oznacza nazwê pliku celu w regule.
-# Wszystkie pliki obiektowe zale¿¹ od wszystkich plików nag³ówkowych.
-# Wciêcia robimy przez TAB.
+# Definicja domyÅ›lnej reguÅ‚y wzorcowej.
+# $< oznacza nazwÄ™ pliku pierwszej zaleÅ¼noÅ›ci reguÅ‚y.
+# $@ oznacza nazwÄ™ pliku celu w regule.
+# Wszystkie pliki obiektowe zaleÅ¼Ä… od wszystkich plikÃ³w nagÅ‚Ã³wkowych.
+# WciÄ™cia robimy przez TAB.
 %.o : %.cpp $(HFILES) Makefile
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-# Na koñcu wstawiamy $(LIBS), aby nie by³o problemów z linkowaniem.
+# Na koÅ„cu wstawiamy $(LIBS), aby nie byÅ‚o problemÃ³w z linkowaniem.
 $(TARGET) : $(OBJECTS)
 	$(CXX) $(CXXFLAGS) $(OBJECTS) -o $(TARGET) 
 
-# Okreœlenie celów sztucznych.
+# OkreÅ›lenie celÃ³w sztucznych.
 .PHONY : clean
 
 clean :
 	$(RM) $(TARGET) *.o core
+
