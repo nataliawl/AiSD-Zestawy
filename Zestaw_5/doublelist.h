@@ -28,9 +28,9 @@ class DoubleList {
     std::size_t lenght = 0;
 public:
     DoubleList() : head(nullptr), tail(nullptr) {}
-    ~DoubleList(); // tu trzeba wyczyscic wezly - zrobione?
+    ~DoubleList(); // tu trzeba wyczyscic wezly
 	
-	// copy constructor - dziala!
+	// copy constructor 
     // usage:   DoubleList<int> list2(list1);
     DoubleList(const DoubleList& other){
 		if(other.empty()){
@@ -63,7 +63,7 @@ public:
 		}
 	} 
 
-	// copy assignment operator, return *this - dziala
+	// copy assignment operator, return *this 
     // usage:   list2 = list1;
     DoubleList& operator=(const DoubleList& other){
     	assert(!other.empty());
@@ -93,18 +93,18 @@ public:
 			return *this;
 	}
 
-	//Sprawdza czy lista jest pusta -zrobione
+	//Sprawdza czy lista jest pusta 
     bool empty() const { return head == nullptr; }
     
-    //Zwraca liczbe elementow listy - O(1) - zrobione!
+    //Zwraca liczbe elementow listy - O(1) 
 	std::size_t size() const {return lenght;} 
     
     // Umieszcza element na poczatku - O(1)
-	void push_front(const T& item); //zrobione!
-    void push_front(T&& item); // O(1) NIEOBOWIAZKOWE
+	void push_front(const T& item); 
+    void push_front(T&& item); 
     
 	// Umieszcza element na poczatku - O(1)
-	void push_back(const T& item); // O(1) 
+	void push_back(const T& item); 
     
     // zwraca poczatek, nie usuwa 
 	T& front() const { return head->value; } 
@@ -112,27 +112,37 @@ public:
 	// zwraca koniec, nie usuwa
 	T& back() const { return tail->value; } 
     
-	void pop_front(); // usuwa poczatek O(1)-zrobione!
+	// usuwa poczatek O(1)-zrobione!
+	void pop_front(); // usuwa poczatek O(1)
     
-	void pop_back(); // usuwa koniec O(1)-zrobione!
+    // usuwa koniec O(1)
+	void pop_back(); 
     
-	void clear(); // czyszczenie listy z elementow O(n)
+	// czyszczenie listy z elementow O(n)
+	void clear(); 
     
-	void display();// O(n)-zrobione!
+    //Wyswietlanie - O(n)
+	void display();
     
-	void display_reversed(); // O(n)-zrobione!
+    //Wypisanie w odwrotnej kolejnosci - O(n)
+	void display_reversed(); 
 
-    // Operacje z indeksami. NIEOBOWIAZKOWE
-	//zaczynamy od 0!
-	//Sprawdzic dzialanie w domu!
-    T& operator[](std::size_t pos); // podstawienie L[pos]=item, odczyt L[pos] - sprawdzic!
-    const T& operator[](std::size_t pos) const; // dostep do obiektu const
-    void erase(std::size_t pos); //sprawdzic!
-    int index(const T& item); // jaki index na liscie (-1 gdy nie ma) O(n)- sprawdzic!
-    void insert(std::size_t pos, const T& item); // inserts item before pos, - sprawdzic!
-    //void insert(std::size_t pos, T&& item); // inserts item before pos,
+    // Operacje z indeksami. 
+	
+	 // podstawienie L[pos]=item, odczyt L[pos] 
+    T& operator[](std::size_t pos);
+    
+    //Usuwanie po indekscie
+	void erase(std::size_t pos); 
+   	
+   	// jaki index na liscie (-1 gdy nie ma) O(n)
+    int index(const T& item); 
+    
+    // inserts item before pos
     // Jezeli pos=0, to wstawiamy na poczatek.
     // Jezeli pos=size(), to wstawiamy na koniec.
+	void insert(std::size_t pos, const T& item);  
+    
 };
 
 template <typename T>
@@ -175,11 +185,11 @@ void DoubleList<T>::insert(std::size_t pos, const T& item){
 		}
 		DoubleNode<T> *before_node = head; // 0
 		DoubleNode<T> *after_node = head->next; //1
-		for(std::size_t i = 0; i < pos; i++){
+		for(std::size_t i = 0; i < pos - 1; i++){
 			before_node = after_node;
 			after_node = after_node->next;
 		}
-		Doublenode<T> *node = new DoubleNode<T>(item, after_node, before_node); 
+		DoubleNode<T> *node = new DoubleNode<T>(item, after_node, before_node); 
 		before_node->next = node;
 		after_node->prev = node;
 		lenght++;
@@ -263,9 +273,9 @@ void DoubleList<T>::display(){
 
 template <typename T>
 void DoubleList<T>::display_reversed(){
-	//if(empty()){
-	//	return;
-	//}
+	if(empty()){
+		return;
+	}
 	DoubleNode<T> *node = tail;
     while (node != nullptr){
         std::cout << node->value << " ";
@@ -350,6 +360,6 @@ void DoubleList<T>::clear(){
 		}
 		
 }
+
 #endif
 
-// EOF

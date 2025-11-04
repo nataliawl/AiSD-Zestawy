@@ -1,5 +1,5 @@
 =========================================================================
-Autorka: Natalia Wlodyka,                              Krakow, 04.11.2025
+Autorka: Natalia Wlodyka,                              Krakow, 05.11.2025
 =========================================================================
 
 * Zawartosc:
@@ -9,7 +9,7 @@ Katolog Zestaw_5_Lista_Podwojna zawiera programy implementujace ADT LIST
 na bazie listy powiazanej podwojno.
  
 Katolog zawiera nastepujacy program:
-- main.cpp - program wywolujacy i sprawdzajacy dzialanie klasy SingleList.
+- main.cpp - program wywolujacy i sprawdzajacy dzialanie klasy DoubleList.
 - doublelist.h - zawiera strukture DoubleNode, oraz klase DoubleList 
 i jej metody.
 --------------------------------------------------------------------------
