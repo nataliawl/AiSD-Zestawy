@@ -26,7 +26,7 @@ int main(){
 	std:: cout << test1.size() << "\n";
 	
 	//Sprawdzamy index
-	std :: cout << "\nIndeksy liczb na liscie zaczynaja sie od 1\n";
+	std :: cout << "\nIndeksy liczb na liscie zaczynaja sie od 0\n";
 	std :: cout << "Indeks liczby 1 wynosi " << test1.index(1) << "\n";
 	std :: cout << "Indeks liczby 4 wynosi " << test1.index(4) << "\n";
 	std :: cout << "Indeks liczby 6 wynosi " << test1.index(6) << "\n";
@@ -50,9 +50,10 @@ int main(){
 	std:: cout << test1.size() << "\n";
 	
 	//Sprawdzamy pobieranie elementow;
-	int test_node = test1.operator[](1);
+	int test_node = test1.operator[](100);
 	std:: cout << "Element dostarczony przez liste wynosi: " << test_node << "\n";
-	test_node = test1.operator[](100);
+	int test_node2 = test1.operator[](1);
+	std:: cout << "Element dostarczony przez liste wynosi: " << test_node2 << "\n";
 	
 	//Sprawdzamy kopiowanie
 	SingleList<int> test2(test1);
@@ -99,5 +100,15 @@ int main(){
 	}
 	else std :: cout << "Lista nie jest pusta\n";
 
-	
+	//Sprawdzam dzialanie funkcji dla pustych list
+	SingleList<int> test4;
+	SingleList<int> test5(test4);
+	std:: cout <<"\nWyswietlam czwarta liste\n";
+	test5.display();
+	SingleList<int> test6;
+	test6 = test4;
+	std:: cout <<"\nWyswietlam piata liste\n";
+	test6.display();
+
+
 }

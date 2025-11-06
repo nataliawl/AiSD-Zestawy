@@ -36,23 +36,24 @@ public:
     // usage:   SingleList<int> list2(list1);
     SingleList(const SingleList& other){
     	if(other.empty()){
-    		std:: cout << "Lista ktora chcesz skopiowac jest pusta!";
+    		//std:: cout << "Lista ktora chcesz skopiowac jest pusta!";
+    		head = tail = nullptr;
     		return;
 		}
-		else{
-			//SingleNode<T> *our_node;
-			//our_node->value = other.head->value;
-			head = new SingleNode<T>(other.head->value);
-			lenght++;
-			SingleNode<T> *our_node = head;
-			SingleNode<T> *other_node = other.head->next;
-			while(other_node != nullptr){
-				if(other_node->next == nullptr){
-					//std:: cout << our_node->value << " ";
-					tail = new SingleNode<T>(other_node->value);
-					our_node->next = tail;
-					lenght++;
-					return;
+		//else{
+		//SingleNode<T> *our_node;
+		//our_node->value = other.head->value;
+		head = new SingleNode<T>(other.head->value);
+		lenght++;
+		SingleNode<T> *our_node = head;
+		SingleNode<T> *other_node = other.head->next;
+		while(other_node != nullptr){
+			if(other_node->next == nullptr){
+				//std:: cout << our_node->value << " ";
+				tail = new SingleNode<T>(other_node->value);
+				our_node->next = tail;
+				lenght++;
+				return;
 				}
 				else {
 					our_node->next = new SingleNode<T>(other_node->value);
@@ -63,13 +64,14 @@ public:
 				}
 			}
 		}	
-	}
 	
 	// copy assignment operator, return *this
     // usage:   list2 = list1;
+    //Chyba dziala?
     SingleList& operator=(const SingleList& other){
-		
-		assert(!other.empty());
+		if(other.empty()){
+			return *this;
+		}
 		head = new SingleNode<T>(other.head->value);
 		lenght++;
 		SingleNode<T> *our_node = head;
@@ -90,7 +92,7 @@ public:
 					
 				}
 			}
-			assert(!empty());
+			//assert(!empty());
 			return *this;
 		}	
 	
@@ -144,9 +146,12 @@ public:
 	// Operacje z indeksami. NIEOBOWIAZKOWE
     
 	// jaki index na liscie (-1 gdy nie ma) O(n)
+	//Chyba tez dziala?
     int index(const T& item){ 
     	//Tworzymy wezel pomocniczy i zmienna index
-		assert(!empty());
+		if(empty()){
+			return -1;
+		}
 		SingleNode<T> *pom_node = head;
 		int index = 0; 
 		while(pom_node != nullptr){
@@ -190,9 +195,9 @@ public:
 	
 	//Wstawianie elementu przed podanym indeksem
 	void insert(std::size_t pos, const T& item){
-		if(empty()){
-			std :: cout << "Lista jest pusta!\n";
-		}
+		//if(empty()){
+		//	std :: cout << "Lista jest pusta!\n";
+		//}
 		if(pos > lenght){
 			std:: cout << "Indeks jest niewlasciwy!\n";
 			return;
@@ -221,11 +226,11 @@ public:
 	T& operator[](std::size_t pos){
 		if(empty()){
 			std :: cout << "Lista jest pusta!\n";
+			return head->value;;
 		}
 		if(pos >= lenght){
 			std:: cout << "\nIndeks jest niewlasciwy!\n";
-			T error = -1;
-			return error;
+			return head->value;;
 		}
 		if(pos == 0){
 			return head->value;
@@ -280,7 +285,10 @@ void SingleList<T>::push_back(const T& item) {
 
 template <typename T>
 void SingleList<T>::display() {
-    SingleNode<T> *node = head;
+    if(empty()){
+    	return;
+	}
+	SingleNode<T> *node = head;
     while (node != nullptr){
         std::cout << node->value << " ";
         node = node->next;
