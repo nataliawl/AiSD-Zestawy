@@ -4,6 +4,7 @@ Autorka: Natalia Wlodyka           Data: 29.10.25
 Main() pokazuje dzialanie klasy Poly oraz
 testuje jej metody.
 
+Dodac testy!
 -----------------------------------------------*/
 #include "polynomial.h"
 
@@ -20,9 +21,9 @@ int main(){
 	
 	//Sprawdzamy wyswietlanie informacji o wielomianach
 	std:: cout << "Stopien wielomianu: " << test1.get_degree() << "\n";
-	std:: cout << "Wartosc przy potendze 1: " << test1.operator[](1) << "\n";
-	std:: cout << "Wartosc przy potendze 10: " << test1.operator[](10) << "\n";
-	std:: cout << "Wartosc przy potendze 1: " << test1.operator[](1) << "\n";
+	std:: cout << "Wartosc przy potendze 1: " << test1[1] << "\n";
+	std:: cout << "Wartosc przy potendze 10: " << test1[10] << "\n";
+	std:: cout << "Wartosc przy potendze 2: " << test1[2] << "\n";
 	
 	//Sprawdzamy kopiowanie
 	Poly<int> test2;
@@ -33,8 +34,7 @@ int main(){
 	test2.add_term(10, 4);
 	
 	Poly<int> test3(test2);
-	Poly<int> test4;
-	test4 = test3;
+	Poly<int> test4 = test3;
 	
 	std:: cout << "Wyswietlam drugi wielomian:\n ";
 	test2.display();
@@ -58,11 +58,11 @@ int main(){
 	
 	//Sprawdzamy dzialania na wielomianach
 	std:: cout << "Wyswietlam wynik dodawania:\n ";
-	test1 + test2;
-	test1.display();
+	Poly<int> test12 = test1 + test2;
+	test12.display();
 	std:: cout << "Wyswietlam wynik odejmowania:\n ";
-	test1 - test2;
-	test1.display();
+	Poly<int>test1_2 = test1 - test2;
+	test1_2.display();
 	std:: cout << "Wyœwietlam wynik mnozenia:\n";
 	Poly<int> test6;
 	Poly<int> test7;
@@ -71,8 +71,8 @@ int main(){
 	test7.add_term(1, 2); //Na koniec 
 	test7.add_term(-3, 1); //Dodawanie po srodku
 	test7.add_term(4, 0);
-	test6 * test7;
-	test6.display();
+	Poly<int> test8 = test6 * test7;
+	test8.display();
 	
 	//Sprawdzamy hornera
 	Poly<int> test5;
@@ -80,12 +80,12 @@ int main(){
 	test5.add_term(-4, 2);
 	test5.add_term(3, 1); 
 	test5.add_term(-5, 0); 
-	std:: cout << "Wyœwietlam wielomian 5:\n";
+	std:: cout << "Wyswietlam wielomian 5:\n";
 	test5.display();
 	std:: cout << "Stopien wielomianu: " << test5.get_degree() << "\n";
-	std:: cout << "Wyœwietlam wynik dzielenia wielomianu przez 2:\n";
-	test5.horner(2);
-	test5.display();
+	std:: cout << "Wyswietlam wynik dzielenia wielomianu przez 2:\n";
+	Poly<int> test9 = test5 / 2;
+	test9.display();
 	
 	//Sprawdzamy czyszczenie:
 	std:: cout << "Wyswietlam pierwszy wielomian:\n ";

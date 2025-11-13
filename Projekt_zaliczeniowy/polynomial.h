@@ -1,7 +1,7 @@
 /* ----------------------------------------------
 Autorka: Natalia Wlodyka           Data: 09.11.25
 
-Implementacjê realizuj¹c¹ wielomiany na bazie listy
+Implementacjê realizujaca wielomiany na bazie listy
 pojedynczo powiazanej.
 Funkcje sa testowane w main
 -----------------------------------------------*/
@@ -14,7 +14,7 @@ Funkcje sa testowane w main
 template <typename T>
 struct Term {
     T value; //wspolczynnik
-    std :: size_t variable; //stopien jednomianu
+    int variable; //stopien jednomianu
     Term *next;
     Term() : value(T()), variable(0) , next(nullptr) {} // konstruktor domyslny - nie bedziemy z niego korzystac
     Term(const T& item, int degree, Term *ptr=nullptr) : value(item), variable(degree), next(ptr) {}	
@@ -24,7 +24,7 @@ struct Term {
 template <typename T>
 class Poly{
 	Term<T> *head, *tail;
-	std :: size_t degree = -1; //Stopien wielomianu
+	int degree = -1; //Stopien wielomianu
 
 public:
 	Poly() : head(nullptr), tail(nullptr) {}
@@ -90,12 +90,12 @@ public:
 	
 	//Dzialania na wielomianach:
 	
-	Poly& operator+(const Poly& other); //Dodawanie 
-	Poly& operator-(const Poly& other); //Odejmowanie 
-	Poly& operator*(const Poly& other); //Mno¿enie
-	Poly& horner(const T& item); // Dzielenie metoda hornera
+	Poly operator+(const Poly& other); //Dodawanie
+	Poly operator-(const Poly& other); //Odejmowanie
+	Poly operator*(const Poly& other); //Mnozenie
+	Poly operator/(const T& item); // Dzielenie metoda hornera
 	bool operator==(const Poly& other); // Czy równe ==
-	bool operator!=(const Poly& other); //Czy róŸne !=
+	bool operator!=(const Poly& other); //Czy rozne !=
 	
 	void display(); //Wypisywanie wielomianu
 	void add_term(const T& item, std :: size_t number); //Zrobione!
@@ -112,11 +112,11 @@ public:
 };
 
 template <typename T>
-Poly<T>& Poly<T>::horner(const T& item){
+Poly<T> Poly<T>::operator/(const T& item){
 	T values[degree];
 	T end_values[degree];
 	Poly<T> pom_poly;
-	for(std :: size_t i = degree; i >= tail->variable; i--){
+	for(int i = degree; i >= tail->variable; i--){
 		if(if_degree(i)){
 			values[i] = this->operator[](i);	
 		}
@@ -128,7 +128,7 @@ Poly<T>& Poly<T>::horner(const T& item){
 		}
 	}
 
-	for(std :: size_t i = degree; i >= tail->variable; i--){
+	for(int i = degree; i >= tail->variable; i--){
 		if(i == degree){
 			end_values[i] = values[i];
 		}
@@ -148,14 +148,13 @@ Poly<T>& Poly<T>::horner(const T& item){
 		}
 		pom_poly.add_term(end_values[i], i - 1);
 	}
-	
-	*this = pom_poly;
-	return *this;
+
+	return pom_poly;
 	
 }
 
 template <typename T>
-Poly<T>& Poly<T>::operator*(const Poly& other){
+Poly<T> Poly<T>::operator*(const Poly &other){
 	Term<T> *term = head;
 	Poly<T> pom_poly;
 	while(term != nullptr){
@@ -168,14 +167,12 @@ Poly<T>& Poly<T>::operator*(const Poly& other){
 		}
 		term = term->next;
 	}
-	*this = pom_poly;
-	return *this;
+	return pom_poly;
 }
 
 template <typename T>
 bool Poly<T>::operator==(const Poly& other){
-	Poly<T> if_equal(*this);
-	if_equal - other;
+	Poly<T> if_equal = *this - other;
 	if(if_equal.empty()){
 		return true;
 	}
@@ -185,8 +182,7 @@ bool Poly<T>::operator==(const Poly& other){
 
 template <typename T>
 bool Poly<T>::operator!=(const Poly& other){
-	Poly<T> if_equal(*this);
-	if_equal - other;
+	Poly<T> if_equal = *this - other;
 	if(if_equal.empty()){
 		return false;
 	}
@@ -210,23 +206,35 @@ void Poly<T>::clear(){
 }
 
 template <typename T>
-Poly<T>& Poly<T>::operator+(const Poly& other){
-	Term<T> *pom_term = other.head;
-	while(pom_term != nullptr){
-		add_term(pom_term->value, pom_term->variable);
-		pom_term = pom_term->next;
+Poly<T> Poly<T>::operator+(const Poly& other){
+	Poly<T> new_poly;
+	Term<T> *one_term = other.head;
+	Term<T> *two_term = head;
+	while(one_term != nullptr){
+		new_poly.add_term(one_term->value, one_term->variable);
+		one_term = one_term->next;
 	}
-	return *this;
+	while(two_term != nullptr){
+		new_poly.add_term(two_term->value, two_term->variable);
+		two_term = two_term->next;
+	}
+	return new_poly;
 }
 
 template <typename T>
-Poly<T>& Poly<T>::operator-(const Poly& other){
-	Term<T> *pom_term = other.head;
-	while(pom_term != nullptr){
-		add_term(-pom_term->value, pom_term->variable);
-		pom_term = pom_term->next;
+Poly<T> Poly<T>::operator-(const Poly& other){
+	Poly<T> new_poly;
+	Term<T> *one_term = head;
+	Term<T> *two_term = other.head;
+	while(one_term != nullptr){
+		new_poly.add_term(one_term->value, one_term->variable);
+		one_term = one_term->next;
 	}
-	return *this;
+	while(two_term != nullptr){
+		new_poly.add_term(-two_term->value, two_term->variable);
+		two_term = two_term->next;
+	}
+	return new_poly;
 }
 
 template <typename T>
@@ -276,9 +284,7 @@ void Poly<T>::add_term(const T& item, std :: size_t number){
 	else if(number < tail->variable){
 			tail->next = new Term<T>(item, number);
         	tail = tail->next;
-        	return;
 	}
-	
 	else {
 		Term<T> *pom_term = head;
 		bool if_found = false;
@@ -294,8 +300,7 @@ void Poly<T>::add_term(const T& item, std :: size_t number){
 				if_found = true;
 			}
 			else pom_term = pom_term->next;
-	}
-	
+		}
 	}
 	if(operator[](number) == 0){
 		remove_term(number);
