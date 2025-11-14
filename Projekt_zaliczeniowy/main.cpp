@@ -4,7 +4,6 @@ Autorka: Natalia Wlodyka           Data: 29.10.25
 Main() pokazuje dzialanie klasy Poly oraz
 testuje jej metody.
 
-Dodac testy!
 -----------------------------------------------*/
 #include "polynomial.h"
 
@@ -16,6 +15,8 @@ int main(){
 	test1.add_term(2, 3); //Na koniec 
 	test1.add_term(5, 2); //Dodawanie po srodku
 	test1.add_term(10, 4);
+	assert(!test1.empty());
+	assert(test1.get_degree() != -1);
 	std:: cout << "Wyswietlam pierwszy wielomian:\n ";
 	test1.display();
 	
@@ -32,9 +33,19 @@ int main(){
 	test2.add_term(10, 3); 
 	test2.add_term(10, 0);
 	test2.add_term(10, 4);
-	
+	std:: cout << "Dziala\n ";
+
+	assert(!test2.empty());
+	assert(test2.get_degree() != -1);
+
 	Poly<int> test3(test2);
 	Poly<int> test4 = test3;
+
+	assert(!test3.empty());
+	assert(test3.get_degree() != -1);
+	assert(!test4.empty());
+	assert(test4.get_degree() != -1);
+
 	
 	std:: cout << "Wyswietlam drugi wielomian:\n ";
 	test2.display();
@@ -51,7 +62,7 @@ int main(){
 	else std:: cout << "Nierowne\n";
 	
 	std:: cout << "Wielomiany test3 i test 4 sa: \n";
-	if(test3 != test4){
+	if(test2 != test4){
 		std:: cout << "Nierowne\n";
 	}
 	else std:: cout << "Rowne\n";
@@ -59,11 +70,13 @@ int main(){
 	//Sprawdzamy dzialania na wielomianach
 	std:: cout << "Wyswietlam wynik dodawania:\n ";
 	Poly<int> test12 = test1 + test2;
+	assert(!test12.empty());
+	assert(test12.get_degree() != -1);
 	test12.display();
 	std:: cout << "Wyswietlam wynik odejmowania:\n ";
 	Poly<int>test1_2 = test1 - test2;
 	test1_2.display();
-	std:: cout << "Wyœwietlam wynik mnozenia:\n";
+	std:: cout << "Wyswietlam wynik mnozenia:\n";
 	Poly<int> test6;
 	Poly<int> test7;
 	test6.add_term(2, 1); //Dodawanie pierwszego elementu dziala
@@ -72,6 +85,8 @@ int main(){
 	test7.add_term(-3, 1); //Dodawanie po srodku
 	test7.add_term(4, 0);
 	Poly<int> test8 = test6 * test7;
+	assert(!test8.empty());
+	assert(test8.get_degree() != -1);
 	test8.display();
 	
 	//Sprawdzamy hornera
@@ -79,7 +94,9 @@ int main(){
 	test5.add_term(1, 3); 
 	test5.add_term(-4, 2);
 	test5.add_term(3, 1); 
-	test5.add_term(-5, 0); 
+	test5.add_term(-5, 0);
+	assert(!test5.empty());
+	assert(test5.get_degree() != -1);
 	std:: cout << "Wyswietlam wielomian 5:\n";
 	test5.display();
 	std:: cout << "Stopien wielomianu: " << test5.get_degree() << "\n";

@@ -32,11 +32,11 @@ public:
     
     // copy constructor 
     // usage:   Poly<int> wielomian2(wielomian1);
-    Poly(const Poly& other){
-    	if(other.empty()){
-    		std:: cout << "Wielomian ktory chcesz skopiowac jest pusta!";
-    		head = tail = nullptr;
-    		return;
+	Poly(const Poly& other){
+		if(other.empty()){
+			std:: cout << "Wielomian ktory chcesz skopiowac jest pusta!";
+			head = tail = nullptr;
+			return;
 		}
 		head = new Term<T>(other.head->value, other.head->variable);
 		degree = other.degree;
@@ -48,23 +48,23 @@ public:
 				tail = new Term<T>(other_term->value, other_term->variable);
 				our_term->next = tail;
 				return;
-				}
-				else {
-					our_term->next = new Term<T>(other_term->value, other_term->variable);
-					our_term = our_term->next;
-					other_term = other_term->next;
-					
-				}
+			}
+			else {
+				our_term->next = new Term<T>(other_term->value, other_term->variable);
+				our_term = our_term->next;
+				other_term = other_term->next;
+
 			}
 		}
-	
-	//Copy assigment constructor 
-	// usage:  wielomian2 = wielomian1	
+	}
+	//Copy assigment constructor
+	// usage:  wielomian2 = wielomian1
 	Poly& operator=(const Poly& other){
+		std:: cout << "Cokolwiek?";
 		if(other.empty()){
-    		std:: cout << "Wielomian ktory chcesz skopiowac jest pusta!";
-    		head = tail = nullptr;
-    		return *this;
+			std:: cout << "Wielomian ktory chcesz skopiowac jest pusta!";
+			head = tail = nullptr;
+			return *this;
 		}
 		this->clear();
 		head = new Term<T>(other.head->value, other.head->variable);
@@ -73,19 +73,20 @@ public:
 		Term<T> *other_term = other.head->next;
 		while(other_term != nullptr){
 			if(other_term->next == nullptr){
-				//std:: cout << our_node->value << " ";
+				std:: cout << our_term->value << " ";
 				tail = new Term<T>(other_term->value, other_term->variable);
 				our_term->next = tail;
 				return *this;
-				}
-				else {
-					our_term->next = new Term<T>(other_term->value, other_term->variable);
-					our_term = our_term->next;
-					other_term = other_term->next;
-					
-				}
 			}
-			return *this;
+			else {
+				std:: cout << our_term->value << " ";
+				our_term->next = new Term<T>(other_term->value, other_term->variable);
+				our_term = our_term->next;
+				other_term = other_term->next;
+
+			}
+		}
+		return *this;
 	}
 	
 	//Dzialania na wielomianach:
@@ -98,21 +99,22 @@ public:
 	bool operator!=(const Poly& other); //Czy rozne !=
 	
 	void display(); //Wypisywanie wielomianu
-	void add_term(const T& item, std :: size_t number); //Zrobione!
-	void remove_term(std :: size_t number); //Do usuwania
+	void add_term(const T& item, int number); //Zrobione!
+	void remove_term(int number); //Do usuwania
 	
 	//Sprawdzanie, czy lista jest pusta
     bool empty() const { return head == nullptr; }
     
-    bool if_degree(std :: size_t number); //Sprawdzamy czy jest juz taki wspolczynnik
-	T& operator[](std :: size_t number); //odczyt wspolczynnika przy danej potêdze x
-	std :: size_t get_degree() {return degree;} //Stopien wielomiany
+    bool if_degree(int number); //Sprawdzamy czy jest juz taki wspolczynnik
+	T& operator[](int number); //odczyt wspolczynnika przy danej potêdze x
+	int get_degree() const {return degree;} //Stopien wielomiany
     void clear(); //Do  czysczenia
     
 };
 
 template <typename T>
 Poly<T> Poly<T>::operator/(const T& item){
+	assert(!empty());
 	T values[degree];
 	T end_values[degree];
 	Poly<T> pom_poly;
@@ -141,7 +143,7 @@ Poly<T> Poly<T>::operator/(const T& item){
 		}
 	}
 	
-	for(std :: size_t i = degree; i >= tail->variable; i--){
+	for(int i = degree; i >= tail->variable; i--){
 		if(i == tail->variable){
 			pom_poly.add_term(end_values[i], i);
 			break;
@@ -157,6 +159,9 @@ template <typename T>
 Poly<T> Poly<T>::operator*(const Poly &other){
 	Term<T> *term = head;
 	Poly<T> pom_poly;
+	if (this->empty() || other.empty()) {
+		return pom_poly;
+	}
 	while(term != nullptr){
 		Term<T> *other_term = other.head;
 		while(other_term != nullptr){
@@ -238,7 +243,7 @@ Poly<T> Poly<T>::operator-(const Poly& other){
 }
 
 template <typename T>
-T& Poly<T>::operator[](std :: size_t number){
+T& Poly<T>::operator[](int number){
 	Term<T> *pom_term = head;
 	while(pom_term->variable != number && pom_term != nullptr){
 		if(!if_degree(number)){
@@ -270,7 +275,7 @@ void Poly<T>::display(){
 }
 
 template <typename T>
-void Poly<T>::add_term(const T& item, std :: size_t number){
+void Poly<T>::add_term(const T& item, int number){
 	if(empty()){
 		head = tail = new Term<T>(item, number);
 		degree = number;
@@ -308,10 +313,8 @@ void Poly<T>::add_term(const T& item, std :: size_t number){
 }
 
 template <typename T>
-void Poly<T>::remove_term(std :: size_t number){
-	if(empty()){
-			std :: cout << "Lista jest pusta!\n";
-		}
+void Poly<T>::remove_term(int number){
+		assert(!empty());
 		if(number == degree){
 			Term<T> *head_term = head; // zapamietujemy
     		if (head == tail) { // jeden wezel na liscie
@@ -345,7 +348,7 @@ void Poly<T>::remove_term(std :: size_t number){
 		Term<T> *before_term = head;
 		Term<T> *pom_term = head->next;
 		
-		for(std :: size_t i = 2; i < number; i++){
+		for(int i = 2; i < number; i++){
 			before_term = pom_term;
 			pom_term = pom_term->next;
 		}
@@ -355,7 +358,7 @@ void Poly<T>::remove_term(std :: size_t number){
 }
 
 template <typename T>
-bool Poly<T>::if_degree(std :: size_t number){
+bool Poly<T>::if_degree(int number){
 	Term<T> *pom_term = head;
 	while(pom_term != nullptr){
 		if(number == pom_term->variable){
@@ -368,7 +371,6 @@ bool Poly<T>::if_degree(std :: size_t number){
 
 template <typename T>
 Poly<T>::~Poly() {
-    //I sposob.
     for (Term<T> *term; !empty(); ) {
         term = head->next; // zapamietujemy
         delete head;
