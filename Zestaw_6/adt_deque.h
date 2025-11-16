@@ -59,26 +59,27 @@ public:
     void display(); //Wyswietlanie listy
     void display_reversed(); //Wyswietlanie w odwrotnej kolejnosci
 
-    std::size_t get_head() const { return head; }; //Indeks glowy
-    std::size_t get_tail() const { return tail; }; //Indeks ogona
 
-    // Operacje z indeksami
-    T& operator[](std::size_t pos); // podstawienie L[pos]=item, odczyt L[pos]
-    void erase(std::size_t pos); //Usuwanie po indeksie
-    int index(const T& item); // jaki index na liście (-1 gdy nie ma)
-    void insert(std::size_t pos, const T& item); // inserts item before pos
+    // Operacje z indeksami - 0 to head, size - 1 to tail
+    T& operator[](int pos); // podstawienie L[pos]=item, odczyt L[pos] - poprawione
+    void erase(int pos); //Usuwanie po indeksie - poprawione!
+    int index(const T& item); // jaki index na liście (-1 gdy nie ma) - poprawione!
+    void insert(int pos, const T& item); // inserts item before pos
 };
 
 template<typename T>
-void MyDeque<T>::erase(std::size_t pos) {
+void MyDeque<T>::erase(int pos) {
     assert(!empty());
-    assert(!(pos >= tail && pos < head ));
-    assert(pos < msize - 1);
-    if (pos == head) pop_front(); //Dziala
-    else if (pos == tail - 1) pop_back(); //Dziala
-    else if (pos < tail - 1){ //Dziala!
+    assert(pos < size());
+    if (pos == 0) pop_front(); //Dziala
+    else if (pos == size() - 1) {
+        pop_back(); //Dziala
+    }
+    else if (head + pos > msize - 1){ //Dziala!
+        int margin = (msize - 1) - head;
+        pos = pos - margin - 1;
         T pom = tab[tail - 1]; //Zapisujemy koniec
-        for (std:: size_t i = tail - 2; i >= pos; i-- ) {
+        for (int i = tail - 2; i >= pos; i-- ) {
             T wanted = tab[i];
             tab[i] = pom;
             pom = wanted;
@@ -87,9 +88,9 @@ void MyDeque<T>::erase(std::size_t pos) {
     }
     else {
         T pom = tab[head];
-        for (std::size_t i = head + 1; i <= pos; i++) {
-            T wanted = tab[i];
-            tab[i] = pom;
+        for (int i = 1; i <= pos; i++) {
+            T wanted = tab[head + i];
+            tab[head + i] = pom;
             pom = wanted;
         }
         head++;
@@ -97,66 +98,65 @@ void MyDeque<T>::erase(std::size_t pos) {
 }
 
 template<typename T> //Chyba dziala!
-void MyDeque<T>::insert(std::size_t pos, const T &item) {
+void MyDeque<T>::insert(int pos, const T &item) {
     //Indeks nie moze byc niepowiazany z innymi elementami listy!
     assert(!full());
-    assert(!(pos >= (tail + 2) && pos <= head - 1));
+    assert(pos <= size());
     //assert(pos < size());
     //Gdy przed pierwszy wolnym, to zamieniamy z ostatnim elemetem?
     //Albo przesuwamy ostatni w sumie - dziala!
-    if (pos == tail) {
-        T pom = tab[tail - 1];
-        tab[tail - 1] = item;
-        tab[tail] = pom;
-        tail++;
-    }
     //Wstawiamy na pierwszym nowym elemencie -dziala!
-    else if (pos == tail + 1) {
-        tab[tail] = item;
+    if (pos == size()) push_back(item);
+    //Jesli wstawiamy przed pierwszym zajetym to zmniejszamy glowe
+    else if (pos == 0) push_front(item);
+    else if (head + pos > msize - 1) {
+        int margin = (msize - 1) - head;
+        pos = pos - margin - 1;
+        std:: cout << pos << std::endl;
+        T wanted = item;
+        for (int i = pos  ; i <= tail; i++) {
+            std:: cout << tab[i] << std:: endl;
+            T pom = tab[i];
+            tab[i] = wanted;
+            wanted = pom;
+        }
         tail++;
     }
-    //Jesli wstawiamy przed pierwszym zajetym to zmniejszamy glowe
-    else if (pos == head) {
-        tab[pos - 1] = item;
-        head = pos -1;
-    }
-    else if (pos > head) {
+    else {
         T wanted = item;
-        for (std:: size_t i = pos - 1 ; i >= head - 1; i--) {
+        for (int i = head + pos - 1; i >= head - 1; i--) {
+            std::cout << i << " " << tab[i] << std::endl;
             T pom = tab[i];
             tab[i] = wanted;
             wanted = pom;
         }
         head--;
     }
-    else { //Zostalo przed ogonem
-        T wanted = item;
-        for (std::size_t i = pos - 1; i <= tail; i++) {
-            T pom = tab[i];
-            tab[i] = wanted;
-            wanted = pom;
-        }
-        tail++;
-    }
 }
 
 template<typename T>
 int MyDeque<T>::index(const T &item) {
-    for (std::size_t i = head; i != tail; i=(i+1) % msize) {
+    int index = 0;
+    for (int i = head; i != tail; i=(i+1) % msize) {
         if(tab[i] == item) {
-            return i;
+            return index;
         }
+        index++;
     }
     return -1;
 }
 
 
 template<typename T>
-T& MyDeque<T>::operator[](std::size_t pos) {
+T& MyDeque<T>::operator[](int pos) {
     assert(!empty());
-    assert(pos < msize);
-    assert(!(pos >=tail && pos < head));
-    return tab[pos];
+    assert(pos < size());
+    if (head + pos > msize - 1) {
+        int pom = (msize - 1) - head;
+        pos = pos - pom;
+        return tab[pos -1];
+    }
+    return tab[head + pos];
 }
 
 

@@ -30,8 +30,6 @@ int main() {
     test_1.display_reversed();
     std:: cout << "Pierwszy element: " << test_1.front() <<"\n";
     std:: cout << "Ostatni element: " << test_1.back() << "\n";
-    std:: cout << "Indeks pierwszego zajetej pozycji: " << test_1.get_head() << std::endl;
-    std:: cout << "Indeks pierwszej wolnej pozycji: " << test_1.get_tail() << std::endl;
     std:: cout <<"Liczba elementow na liscie: " << test_1.size() << std::endl;
     std:: cout <<"Maksymalna ilos elementow na liscie: " << test_1.max_size() << std::endl;
 
@@ -51,14 +49,20 @@ int main() {
 
     std:: cout << "\nWracamy do listy pierwszej\n";
     //Sprawdzamy dzialanie na indeksach
+    test_1.display();
     std:: cout << "Indeks liczby 3: " << test_1.index(3) << std::endl;
+    std:: cout << "Indeks liczby 1: " << test_1.index(1) << std::endl;
+    std:: cout << "Indeks liczby 6: " << test_1.index(6) << std::endl;
+    test_1.erase(3);
+    test_1.display();
+    test_1.insert(5, 0);
+    test_1.insert(3, 13);
+    test_1.display();
     std:: cout << "Indeks liczby 13: " << test_1.index(13) << std::endl;
-    std:: cout << "Liczba o indeksie 10: " << test_1.operator[](10) << std::endl;
+    std:: cout << "Liczba o indeksie 0: " << test_1.operator[](0) << std::endl;
     std:: cout << "Liczba o indeksie 1: " << test_1.operator[](1) << std::endl;
-    test_1.insert(2,10);
-    std:: cout << "Liczba o indeksie 1: " << test_1.operator[](1) << std::endl;
-    test_1.erase(1);
-    std:: cout << "Liczba o indeksie 1: " << test_1.operator[](1) << std::endl;
+    std:: cout << "Liczba o indeksie 2: " << test_1.operator[](2) << std::endl;
+    std:: cout << "Liczba o indeksie 5: " << test_1.operator[](5) << std::endl;
 
     return 0;
 }
