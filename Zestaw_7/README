@@ -6,7 +6,7 @@ Autorka: Natalia Wlodyka,                              Krakow, 18.11.2025
 ============
 
 Katolog Zestaw_7_ADT_STACK zawiera programy implementujace ADT STACK
-na bazie listy powiazanej pojedynczo.
+na bazie listy powiazanej pojedynczo (zad. 7.3)
  
 Katolog zawiera nastepujacy program:
 - main.cpp - program wywolujacy i sprawdzajacy dzialanie klasy MyStack.
@@ -28,4 +28,5 @@ i jego archiwizacji.
        make clean
 
 ==========================================================================
+
 
