@@ -1,60 +1,17 @@
 =========================================================================
-Autorka: Natalia Wlodyka,                              Krakow, 08.11.2025
+Autorka: Natalia Wlodyka,                              Krakow, 18.11.2025
 =========================================================================
 
 * Zawartosc:
 ============
 
-Katolog Projekt_Wielomiany zawiera programy implementujace wielomiany
+Katolog Zestaw_7_ADT_STACK zawiera programy implementujace ADT STACK
 na bazie listy powiazanej pojedynczo.
  
 Katolog zawiera nastepujacy program:
-- main.cpp - program wywolujacy i sprawdzajacy dzialanie klasy Poly.
-- polynomial.h - zawiera strukture Term, oraz klase Poly,
+- main.cpp - program wywolujacy i sprawdzajacy dzialanie klasy MyStack.
+- singlelist.h - zawiera strukture SingleNode, oraz klase MyStack
 i jej metody.
-
-* Opis struktury Term:
-======================
-
-Struktura Term implementuje jednomian bedacy czescia wielomianu.
-Wyswietlany on bedzie tak jak przykladowy jednomian o wspolczynniku
-5 i stopniu 2: 5*x^2.
-
-Struktura ta zawiera:
-- value - wspolczynnik jednomianu
-- variable - stopien jednomianu
-- next - wskaznik na kolejny jednomian
-
-* Opis klasy Poly:
-======================
-
-Klasa Poly implementuje za pomoca struktury Term wielomiany na bazie listy
-powiazanej pojedynczo. Wyswietlane one bedza w postaci:
-1*x^3 + -4*x^2 + 3*x^1 + -5*x^0
-
-Klasa ta zawiera:
-- head, tail - wskazniki na pierwszy i ostatni element wielomianu
-- degree - stopien wielomianu
-
-* Funkcje klasy Poly:
-======================
-- copy operator - Poly(other Poly) oraz poly = other_poly -
-konstruktory kopiujace
-- operator + - dodawanie dwoch wielomianow np. poly3 = poly1 + poly2
-- operator - : odejmowanie wielomianow np. poly3 = poly1 - poly2
-- operator * - mnozenie wielomianow np. poly3 = poly1 * poly2
-- operator == i operator != - porownywanie dwoch wielomianow poprzed
-odjecie jednego od drugiego
-- display - wyswietlanie wielomianu np. 10*x^4 + 2*x^3 + 5*x^2 + 6*x^1
-- add_term - dodawanie jednomianu do istniejacego wielomianu. Funkcja sluzy
-do wstepnego tworzenia wielomianow
-- remove_term - usuniecie jednomianu z istniejacego wielomianu
-- empty - sprawdza czy wielomian nie zawiera jednomianow
-- if_degree- sprawdza czy wielomian zawiera jednomian o danym stopniu
-- operator[] - odczytuje wspolczynnik przy danej potedze
-- get_degree - zwraca stopien wielomianu
-- clear - "czysci" wielomian
-
 --------------------------------------------------------------------------
 
 * Jak uruchomic program:

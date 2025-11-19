@@ -5,26 +5,26 @@ CXX = g++
 # Flagi dla kompilatora C++.
 # Standardy: -std=c++11 -std=c++14 -std=c++17 -std=c++20 -std=c++23 -std=c++26
 CXXFLAGS = -Wall -std=c++11
-# Pliki obiektowe - powstaj¹ z plików *.cpp.
+# Pliki obiektowe - powstajï¿½ z plikï¿½w *.cpp.
 OBJECTS = main.o 
-# Pliki nag³ówkowe - s¹ w³¹czane do plików *.cpp.
-HFILES = polynomial.h
-# Koñcowy plik wykonywalny.
+# Pliki nagï¿½ï¿½wkowe - sï¿½ wï¿½ï¿½czane do plikï¿½w *.cpp.
+HFILES = adt_stack.h
+# Koï¿½cowy plik wykonywalny.
 TARGET = main.out
 
-# Definicja domyœlnej regu³y wzorcowej.
-# $< oznacza nazwê pliku pierwszej zale¿noœci regu³y.
-# $@ oznacza nazwê pliku celu w regule.
-# Wszystkie pliki obiektowe zale¿¹ od wszystkich plików nag³ówkowych.
-# Wciêcia robimy przez TAB.
+# Definicja domyï¿½lnej reguï¿½y wzorcowej.
+# $< oznacza nazwï¿½ pliku pierwszej zaleï¿½noï¿½ci reguï¿½y.
+# $@ oznacza nazwï¿½ pliku celu w regule.
+# Wszystkie pliki obiektowe zaleï¿½ï¿½ od wszystkich plikï¿½w nagï¿½ï¿½wkowych.
+# Wciï¿½cia robimy przez TAB.
 %.o : %.cpp $(HFILES) Makefile
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-# Na koñcu wstawiamy $(LIBS), aby nie by³o problemów z linkowaniem.
+# Na koï¿½cu wstawiamy $(LIBS), aby nie byï¿½o problemï¿½w z linkowaniem.
 $(TARGET) : $(OBJECTS)
 	$(CXX) $(CXXFLAGS) $(OBJECTS) -o $(TARGET) 
 
-# Okreœlenie celów sztucznych.
+# Okreï¿½lenie celï¿½w sztucznych.
 .PHONY : clean
 
 clean :
