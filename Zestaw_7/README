@@ -10,7 +10,7 @@ na bazie listy powiazanej pojedynczo.
  
 Katolog zawiera nastepujacy program:
 - main.cpp - program wywolujacy i sprawdzajacy dzialanie klasy MyStack.
-- singlelist.h - zawiera strukture SingleNode, oraz klase MyStack
+- adt_stack.h - zawiera strukture SingleNode, oraz klase MyStack
 i jej metody.
 --------------------------------------------------------------------------
 
@@ -28,3 +28,4 @@ i jego archiwizacji.
        make clean
 
 ==========================================================================
+
