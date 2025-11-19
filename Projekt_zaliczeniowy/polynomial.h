@@ -99,8 +99,8 @@ public:
 	bool operator!=(const Poly& other); //Czy rozne !=
 	
 	void display(); //Wypisywanie wielomianu
-	void add_term(const T& item, int number); //Zrobione!
-	void remove_term(int number); //Do usuwania
+	void add_term(const T& item, int liczba); //Zrobione!
+	void remove_term(int liczba); //Do usuwania
 	
 	//Sprawdzanie, czy lista jest pusta
     bool empty() const { return head == nullptr; }
@@ -222,6 +222,12 @@ Poly<T> Poly<T>::operator+(const Poly& other){
 	while(two_term != nullptr){
 		new_poly.add_term(two_term->value, two_term->variable);
 		two_term = two_term->next;
+
+	}
+	for (int i = new_poly.degree; i >= 0; --i) {
+		if(if_degree(i) && operator[](i) == 0){
+			remove_term(i);
+		}
 	}
 	return new_poly;
 }
@@ -238,6 +244,12 @@ Poly<T> Poly<T>::operator-(const Poly& other){
 	while(two_term != nullptr){
 		new_poly.add_term(-two_term->value, two_term->variable);
 		two_term = two_term->next;
+	}
+
+	for (int i = new_poly.degree; i >= 0; --i) {
+		if(if_degree(i) && operator[](i) == 0){
+			remove_term(i);
+		}
 	}
 	return new_poly;
 }
@@ -275,19 +287,19 @@ void Poly<T>::display(){
 }
 
 template <typename T>
-void Poly<T>::add_term(const T& item, int number){
+void Poly<T>::add_term(const T& item, int liczba){
 	if(empty()){
-		head = tail = new Term<T>(item, number);
-		degree = number;
+		head = tail = new Term<T>(item, liczba);
+		degree = liczba;
 	}
 	//Dodaje na poczatek
-	else if(number > head->variable){
-		head = new Term<T>(item, number, head);
-		degree = number;
+	else if(liczba > head->variable){
+		head = new Term<T>(item, liczba, head);
+		degree = liczba;
 	}
 	//Dodaje jednomian na koniec
-	else if(number < tail->variable){
-			tail->next = new Term<T>(item, number);
+	else if(liczba < tail->variable){
+			tail->next = new Term<T>(item, liczba);
         	tail = tail->next;
 	}
 	else {
@@ -295,27 +307,27 @@ void Poly<T>::add_term(const T& item, int number){
 		bool if_found = false;
 		while(pom_term != nullptr && !if_found ){
 			//Zamieniam wartosc juz istniejacego jednomianu
-			if(number == pom_term->variable){
+			if(liczba == pom_term->variable){
 				pom_term->value = pom_term->value + item;
 				if_found = true;
 			}
 			//Dodajemy nowy jednomian pomiedzy istniejace
-			else if(number < pom_term->variable && number > pom_term->next->variable ){
-				pom_term->next = new Term<T>(item, number, pom_term->next);
+			else if(liczba < pom_term->variable && liczba > pom_term->next->variable ){
+				pom_term->next = new Term<T>(item, liczba, pom_term->next);
 				if_found = true;
 			}
 			else pom_term = pom_term->next;
 		}
 	}
-	if(operator[](number) == 0){
-		remove_term(number);
+	if(operator[](liczba) == 0){
+		remove_term(liczba);
 	}
 }
 
-template <typename T>
-void Poly<T>::remove_term(int number){
+template <typename T> //Chyba juz dziala poprawnie
+void Poly<T>::remove_term(int liczba){
 		assert(!empty());
-		if(number == degree){
+		if(liczba == degree){
 			Term<T> *head_term = head; // zapamietujemy
     		if (head == tail) { // jeden wezel na liscie
         		head = tail = nullptr;
@@ -327,7 +339,7 @@ void Poly<T>::remove_term(int number){
     		delete head_term;
 			return;
 		}
-		if(number == tail->variable){
+		if(liczba == tail->variable){
 			Term<T> *tail_term = tail; // zapamietujemy
     		if (head == tail) { // jeden wezel na liscie
         		head = tail = nullptr;
@@ -344,11 +356,13 @@ void Poly<T>::remove_term(int number){
     			delete tail_term;
 				return;
 		}
-		
+
+
 		Term<T> *before_term = head;
 		Term<T> *pom_term = head->next;
 		
-		for(int i = 2; i < number; i++){
+		for(int i = degree - 1; i > liczba; i--){
+			if (!if_degree(i)) continue;
 			before_term = pom_term;
 			pom_term = pom_term->next;
 		}
