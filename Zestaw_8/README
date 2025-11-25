@@ -1,0 +1,30 @@
+=========================================================================
+Autorka: Natalia Wlodyka,                              Krakow, 26.11.2025
+=========================================================================
+
+* Zawartosc:
+============
+
+Katolog Zestaw_8_ADT_QUEUE zawiera programy implementujace ADT QUEUE
+na bazie listy powiazanej podwojnie.
+ 
+Katolog zawiera nastepujacy program:
+- main.cpp - program wywolujacy i sprawdzajacy dzialanie klasy MyQueue.
+- queue.h - zawiera strukture DoubleNode, oraz klase MyQueue
+i jej metody.
+--------------------------------------------------------------------------
+
+* Jak uruchomic program:
+========================
+
+Katalog zawiera program Makefile do kompilacji, linkowania
+i uruchamiania powyzszych programow, a takze czyszczenia katalogu 
+i jego archiwizacji.
+
+-> Aby uruchomic program, nalezy w line polecen powloki wykonac:
+       make
+            
+-> Aby wyczyscic zawartosc katalogu (usunac zbedne pliki), nalezy wykonac:
+       make clean
+
+==========================================================================
