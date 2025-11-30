@@ -10,15 +10,14 @@ Funkcje sa testowane w main
 
 #include <iostream>   
 #include <cassert>    
-#include <algorithm>
 template <typename T>
 struct Term {
     T value; //wspolczynnik
     int variable; //stopien jednomianu
     Term *next;
     Term() : value(T()), variable(0) , next(nullptr) {} // konstruktor domyslny - nie bedziemy z niego korzystac
-    Term(const T& item, int degree, Term *ptr=nullptr) : value(item), variable(degree), next(ptr) {}	
-    ~Term() {} // destruktor
+    Term(const T& item, const int degree, Term *ptr=nullptr) : value(item), variable(degree), next(ptr) {}
+    ~Term() = default; // destruktor
 };
 
 template <typename T>
@@ -60,7 +59,6 @@ public:
 	//Copy assigment constructor
 	// usage:  wielomian2 = wielomian1
 	Poly& operator=(const Poly& other){
-		std:: cout << "Cokolwiek?";
 		if(other.empty()){
 			std:: cout << "Wielomian ktory chcesz skopiowac jest pusta!";
 			head = tail = nullptr;
@@ -94,7 +92,7 @@ public:
 	Poly operator+(const Poly& other); //Dodawanie
 	Poly operator-(const Poly& other); //Odejmowanie
 	Poly operator*(const Poly& other); //Mnozenie
-	Poly operator/(const T& item); // Dzielenie metoda hornera
+	Poly horner(const T& item); // Dzielenie metoda hornera
 	bool operator==(const Poly& other); // Czy równe ==
 	bool operator!=(const Poly& other); //Czy rozne !=
 	
@@ -113,14 +111,14 @@ public:
 };
 
 template <typename T>
-Poly<T> Poly<T>::operator/(const T& item){
+Poly<T> Poly<T>::horner(const T& item){
 	assert(!empty());
 	T values[degree];
 	T end_values[degree];
 	Poly<T> pom_poly;
 	for(int i = degree; i >= tail->variable; i--){
 		if(if_degree(i)){
-			values[i] = this->operator[](i);	
+			values[i] = (*this)[i];
 		}
 		else {
 			values[i] = 0;
@@ -177,8 +175,7 @@ Poly<T> Poly<T>::operator*(const Poly &other){
 
 template <typename T>
 bool Poly<T>::operator==(const Poly& other){
-	Poly<T> if_equal = *this - other;
-	if(if_equal.empty()){
+	if(const Poly<T> if_equal = *this - other; if_equal.empty()){
 		return true;
 	}
 	else return false;
@@ -187,8 +184,7 @@ bool Poly<T>::operator==(const Poly& other){
 
 template <typename T>
 bool Poly<T>::operator!=(const Poly& other){
-	Poly<T> if_equal = *this - other;
-	if(if_equal.empty()){
+	if(const Poly<T> if_equal = *this - other; if_equal.empty()){
 		return false;
 	}
 	else return true;
@@ -198,11 +194,11 @@ bool Poly<T>::operator!=(const Poly& other){
 template <typename T>
 void Poly<T>::clear(){
 	while(head != nullptr){
-		Term<T> *term = head; // zapamietujemy
+		const Term<T> *term = head; // zapamietujemy
     	if (head == tail) { // jeden wezel na liscie
         	head = tail = nullptr;
     	} 
-		else { // wiecej niz jeden wezel na liscie
+		else{ // wiecej niz jeden wezel na liscie
         	head = head->next;
     	}
     	delete term;
@@ -225,7 +221,7 @@ Poly<T> Poly<T>::operator+(const Poly& other){
 
 	}
 	for (int i = new_poly.degree; i >= 0; --i) {
-		if(if_degree(i) && operator[](i) == 0){
+		if(if_degree(i) && (*this)[i] == 0){
 			remove_term(i);
 		}
 	}
@@ -247,7 +243,7 @@ Poly<T> Poly<T>::operator-(const Poly& other){
 	}
 
 	for (int i = new_poly.degree; i >= 0; --i) {
-		if(if_degree(i) && operator[](i) == 0){
+		if(if_degree(i) && (*this)[i] == 0){
 			remove_term(i);
 		}
 	}
@@ -319,16 +315,16 @@ void Poly<T>::add_term(const T& item, int liczba){
 			else pom_term = pom_term->next;
 		}
 	}
-	if(operator[](liczba) == 0){
+	if((*this)[liczba] == 0){
 		remove_term(liczba);
 	}
 }
 
-template <typename T> //Chyba juz dziala poprawnie
+template <typename T>
 void Poly<T>::remove_term(int liczba){
 		assert(!empty());
 		if(liczba == degree){
-			Term<T> *head_term = head; // zapamietujemy
+			const Term<T> *head_term = head; // zapamietujemy
     		if (head == tail) { // jeden wezel na liscie
         		head = tail = nullptr;
         		degree = -1;
@@ -340,7 +336,7 @@ void Poly<T>::remove_term(int liczba){
 			return;
 		}
 		if(liczba == tail->variable){
-			Term<T> *tail_term = tail; // zapamietujemy
+			const Term<T> *tail_term = tail; // zapamietujemy
     		if (head == tail) { // jeden wezel na liscie
         		head = tail = nullptr;
         		degree = -1;
@@ -370,6 +366,7 @@ void Poly<T>::remove_term(int liczba){
 		before_term->next = pom_term->next;
 		delete pom_term;
 }
+
 
 template <typename T>
 bool Poly<T>::if_degree(int number){

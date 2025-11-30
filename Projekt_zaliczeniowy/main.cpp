@@ -3,8 +3,6 @@ Autorka: Natalia Wlodyka           Data: 29.10.25
 
 Main() pokazuje dzialanie klasy Poly oraz
 testuje jej metody.
-
-//Stworzy poly answer i asserty do nich!
 -----------------------------------------------*/
 #include "polynomial.h"
 
@@ -15,7 +13,6 @@ int main(){
 	answer_add.add_term(20, 4);
 	answer_add.add_term(12, 3);
 	answer_add.add_term(16,1);
-	//answer_add.add_term()
 	Poly<int> answer_minus;
 	answer_minus.add_term(-10, 5);
 	answer_minus.add_term(10, 2);
@@ -123,7 +120,7 @@ int main(){
 	test5.display();
 	std:: cout << "Stopien wielomianu: " << test5.get_degree() << "\n";
 	std:: cout << "Wyswietlam wynik dzielenia wielomianu przez 2:\n";
-	Poly<int> test9 = test5 / 2;
+	Poly<int> test9 = test5.horner(2);
 	assert(test9 == answer_divi);
 	test9.display();
 	
