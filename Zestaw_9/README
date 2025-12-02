@@ -21,6 +21,7 @@ i jej metody.
 - iter_calc_leaves() - funkcja liczaca liscie iteracyjnie
 - rec_calc_leaves() - funkcja liczaca liscie rekurecyjnie
 --------------------------------------------------------------------------
+
 * Jak uruchomic program:
 ========================
 
@@ -35,4 +36,5 @@ i jego archiwizacji.
        make clean
 
 ==========================================================================
+
 
