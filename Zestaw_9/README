@@ -15,6 +15,7 @@ klasy RandomBinaryTree.
 - adt_tree.h - zawiera strukture BSTNode, oraz klase RandomBinaryTree
 i jej metody.
 --------------------------------------------------------------------------
+
 * Funkcje z zadania 9.1:
 =======================
 - iter_calc_leaves() - funkcja liczaca liscie iteracyjnie
@@ -34,3 +35,4 @@ i jego archiwizacji.
        make clean
 
 ==========================================================================
+
