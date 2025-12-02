@@ -1,0 +1,36 @@
+=========================================================================
+Autorka: Natalia Wlodyka,                              Krakow, 03.12.2025
+=========================================================================
+
+* Zawartosc:
+============
+
+Katolog Zestaw_9_ADT_TREE zawiera programy implementujace ADT TREE
+oraz funkcje iter_calc_leaves() i rec_calc_leaves(), ktore obliczaja
+liczbe lisci w drzewie (zadanie 9.1)
+ 
+Katolog zawiera nastepujacy program:
+- main.cpp - program wywolujacy i sprawdzajacy dzialanie
+klasy RandomBinaryTree.
+- adt_tree.h - zawiera strukture BSTNode, oraz klase RandomBinaryTree
+i jej metody.
+--------------------------------------------------------------------------
+* Funkcje z zadania 9.1:
+=======================
+- iter_calc_leaves() - funkcja liczaca liscie iteracyjnie
+- rec_calc_leaves() - funkcja liczaca liscie rekurecyjnie
+--------------------------------------------------------------------------
+* Jak uruchomic program:
+========================
+
+Katalog zawiera program Makefile do kompilacji, linkowania
+i uruchamiania powyzszych programow, a takze czyszczenia katalogu 
+i jego archiwizacji.
+
+-> Aby uruchomic program, nalezy w line polecen powloki wykonac:
+       make
+            
+-> Aby wyczyscic zawartosc katalogu (usunac zbedne pliki), nalezy wykonac:
+       make clean
+
+==========================================================================
