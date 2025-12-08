@@ -1,5 +1,5 @@
 /* ----------------------------------------------
-Autorka: Natalia Wlodyka           Data: 11.12.25
+Autorka: Natalia Wlodyka           Data: 08.12.25
 
 Implementacja realizujaca BST TREE dla
 zadania 10.1
