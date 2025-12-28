@@ -1,5 +1,5 @@
 /* ----------------------------------------------
-Autorka: Natalia Wlodyka           Data: 29.10.25
+Autorka: Natalia Wlodyka           Data: 28.12.25
 
 Main() pokazuje dzialanie klasy Poly oraz
 testuje jej metody.

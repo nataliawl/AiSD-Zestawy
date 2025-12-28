@@ -1,5 +1,5 @@
 /* ----------------------------------------------
-Autorka: Natalia Wlodyka           Data: 09.11.25
+Autorka: Natalia Wlodyka           Data: 28.12.25
 
 Implementacjê realizujaca wielomiany na bazie listy
 pojedynczo powiazanej.
@@ -101,11 +101,11 @@ public:
 	void remove_term(int liczba); //Do usuwania
 	
 	//Sprawdzanie, czy lista jest pusta
-    bool empty() const { return head == nullptr; }
+    [[nodiscard]] bool empty() const { return head == nullptr; }
     
     bool if_degree(int number); //Sprawdzamy czy jest juz taki wspolczynnik
 	T& operator[](int number); //odczyt wspolczynnika przy danej potêdze x
-	int get_degree() const {return degree;} //Stopien wielomiany
+	[[nodiscard]] int get_degree() const {return degree;} //Stopien wielomiany
     void clear(); //Do  czysczenia
     
 };
@@ -198,7 +198,7 @@ void Poly<T>::clear(){
     	if (head == tail) { // jeden wezel na liscie
         	head = tail = nullptr;
     	} 
-		else{ // wiecej niz jeden wezel na liscie
+		else { // wiecej niz jeden wezel na liscie
         	head = head->next;
     	}
     	delete term;
@@ -255,7 +255,7 @@ T& Poly<T>::operator[](int number){
 	Term<T> *pom_term = head;
 	while(pom_term->variable != number && pom_term != nullptr){
 		if(!if_degree(number)){
-			Term<T> *term = new Term<T>(-1, 0);
+			auto *term = new Term<T>(-1, 0);
 			return term->value;
 		}
 		pom_term = pom_term->next;
@@ -321,52 +321,33 @@ void Poly<T>::add_term(const T& item, int liczba){
 }
 
 template <typename T>
-void Poly<T>::remove_term(int liczba){
-		assert(!empty());
-		if(liczba == degree){
-			const Term<T> *head_term = head; // zapamietujemy
-    		if (head == tail) { // jeden wezel na liscie
-        		head = tail = nullptr;
-        		degree = -1;
-    		} else { // wiecej niz jeden wezel na liscie
-        		degree = head->next->variable;
-				head = head->next;
-    		}
-    		delete head_term;
-			return;
-		}
-		if(liczba == tail->variable){
-			const Term<T> *tail_term = tail; // zapamietujemy
-    		if (head == tail) { // jeden wezel na liscie
-        		head = tail = nullptr;
-        		degree = -1;
-    		} else { // wiecej niz jeden wezel na liscie
-        		// Szukamy poprzednika ogona.
-        		Term<T> *before=head;
-        		while (before->next != tail) {
-            		before = before->next;
-        		}
-        		tail = before;
-        		tail->next = nullptr;
-    		}
-    			delete tail_term;
-				return;
-		}
+void Poly<T>::remove_term(int liczba) {
+	assert(!empty());
+	Term<T> *before_term = head;
+	Term<T> *pom_term = head->next;
 
-
-		Term<T> *before_term = head;
-		Term<T> *pom_term = head->next;
-		
-		for(int i = degree - 1; i > liczba; i--){
-			if (!if_degree(i)) continue;
-			before_term = pom_term;
-			pom_term = pom_term->next;
+	if(liczba == degree){
+		if (head == tail) { // jeden wezel na liscie
+			head = tail = nullptr;
+			degree = -1;
+		} else { // wiecej niz jeden wezel na liscie
+			degree = pom_term->variable;
+			head = pom_term;
 		}
-		
-		before_term->next = pom_term->next;
-		delete pom_term;
+		delete before_term;
+		return;
+	}
+
+	for(int i = degree - 1; i > liczba; i--){
+		if (!if_degree(i)) continue;
+		before_term = pom_term;
+		pom_term = pom_term->next;
+	}
+
+	if (liczba == tail->variable) tail = before_term;
+	before_term->next = pom_term->next;
+	delete pom_term;
 }
-
 
 template <typename T>
 bool Poly<T>::if_degree(int number){
