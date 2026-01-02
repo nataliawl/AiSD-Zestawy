@@ -45,7 +45,7 @@ konstruktory kopiujace
 - operator * - mnozenie wielomianow np. poly3 = poly1 * poly2
 - operator == i operator != - porownywanie dwoch wielomianow poprzed
 odjecie jednego od drugiego
-- horner : dzielenie wielomianu metoda hornera przez jednomian(x - liczba)
+- horner : wyliczanie wartości wielomianu dla danego x
 - display - wyswietlanie wielomianu np. 10*x^4 + 2*x^3 + 5*x^2 + 6*x^1
 - add_term - dodawanie jednomianu do istniejacego wielomianu. Funkcja sluzy
 do wstepnego tworzenia wielomianow

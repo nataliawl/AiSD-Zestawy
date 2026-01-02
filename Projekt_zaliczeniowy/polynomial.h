@@ -92,7 +92,7 @@ public:
 	Poly operator+(const Poly& other); //Dodawanie
 	Poly operator-(const Poly& other); //Odejmowanie
 	Poly operator*(const Poly& other); //Mnozenie
-	Poly horner(const T& item); // Dzielenie metoda hornera
+	T horner(const T& item); // Dzielenie metoda hornera
 	bool operator==(const Poly& other); // Czy równe ==
 	bool operator!=(const Poly& other); //Czy rozne !=
 	
@@ -111,48 +111,21 @@ public:
 };
 
 template <typename T>
-Poly<T> Poly<T>::horner(const T& item){
-	assert(!empty());
-	T values[degree];
-	T end_values[degree];
-	Poly<T> pom_poly;
-	for(int i = degree; i >= tail->variable; i--){
-		if(if_degree(i)){
-			values[i] = (*this)[i];
+T Poly<T>::horner(const T& item) {
+	Term<T> *term = head;
+	T result = term->value;
+	term = term->next;
+	for (int i = 1; i <= degree; i++) {
+		if (!if_degree(degree - i)) {
+			result = result * item;
 		}
 		else {
-			values[i] = 0;
-		}
-		if(i == 0){
-			break;
+			result = result * item + term->value;
+			term = term->next;
 		}
 	}
-
-	for(int i = degree; i >= tail->variable; i--){
-		if(i == degree){
-			end_values[i] = values[i];
-		}
-		else{
-			end_values[i] = item*end_values[i + 1] + values[i];
-		}
-		
-		if(i == 0){
-			break;
-		}
-	}
-	
-	for(int i = degree; i >= tail->variable; i--){
-		if(i == tail->variable){
-			pom_poly.add_term(end_values[i], i);
-			break;
-		}
-		pom_poly.add_term(end_values[i], i - 1);
-	}
-
-	return pom_poly;
-	
+	return result;
 }
-
 template <typename T>
 Poly<T> Poly<T>::operator*(const Poly &other){
 	Term<T> *term = head;

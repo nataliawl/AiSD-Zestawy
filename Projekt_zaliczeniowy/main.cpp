@@ -23,10 +23,6 @@ int main(){
 	answer_multy.add_term(-5,2);
 	answer_multy.add_term(5,1);
 	answer_multy.add_term(4,0);
-	Poly<int> answer_divi;
-	answer_divi.add_term(1,2);
-	answer_divi.add_term(-2, 1);
-	answer_divi.add_term(-8,0);
 
 	//Sprawdzamy dodawanie elementu oraz wyswietlanie
 	Poly<int> test1;
@@ -110,20 +106,57 @@ int main(){
 	
 	//Sprawdzamy hornera
 	Poly<int> test5;
-	test5.add_term(1, 3); 
-	test5.add_term(-4, 2);
-	test5.add_term(3, 1); 
-	test5.add_term(-5, 0);
+	Poly<int> test9;
+	Poly<int> test10;
+	test5.add_term(2, 3);
+	test5.add_term(-6, 2);
+	test5.add_term(2, 1);
+	test5.add_term(-1, 0);
+	test9.add_term(4, 3);
+	test9.add_term(2, 1);
+	test10.add_term(-7, 7);
+	test10.add_term(3, 3);
+	test10.add_term(1, 1);
 	assert(!test5.empty());
 	assert(test5.get_degree() != -1);
+	assert(!test9.empty());
+	assert(test9.get_degree() != -1);
+	assert(!test10.empty());
+	assert(test10.get_degree() != -1);
+
 	std:: cout << "Wyswietlam wielomian 5:\n";
 	test5.display();
 	std:: cout << "Stopien wielomianu: " << test5.get_degree() << "\n";
-	std:: cout << "Wyswietlam wynik dzielenia wielomianu przez 2:\n";
-	Poly<int> test9 = test5.horner(2);
-	assert(test9 == answer_divi);
+	int result_x0 = test5.horner(0);
+	int result_x3 = test5.horner(3);
+	assert(result_x0 == -1);
+	assert(result_x3 == 5);
+	std:: cout << "Wartosc wielomianu dla x = 0 wynosi:" << result_x0 << std:: endl;
+	std:: cout << "Wartosc wielomianu dla x = 3 wynosi:" << result_x3 << std:: endl;
+
+	std:: cout << "Wyswietlam wielomian 9:\n";
 	test9.display();
-	
+	std:: cout << "Stopien wielomianu: " << test9.get_degree() << "\n";
+	int result_9x0 = test9.horner(0);
+	int result_9x3 = test9.horner(3);
+	assert(result_9x0 == 0);
+	assert(result_9x3 == 114);
+	std:: cout << "Wartosc wielomianu dla x = 0 wynosi:" << result_9x0 << std:: endl;
+	std:: cout << "Wartosc wielomianu dla x = 3 wynosi:" << result_9x3 << std:: endl;
+
+	std:: cout << "Wyswietlam wielomian 10:\n";
+	test10.display();
+	std:: cout << "Stopien wielomianu: " << test10.get_degree() << "\n";
+	int result_10x0 = test10.horner(0);
+	int result_10x1 = test10.horner(1);
+	int result_10x2 = test10.horner(2);
+	assert(result_10x0 == 0);
+	assert(result_10x1 == -3);
+	assert(result_10x2 == -870);
+	std:: cout << "Wartosc wielomianu dla x = 0 wynosi:" << result_10x0 << std:: endl;
+	std:: cout << "Wartosc wielomianu dla x = 1 wynosi:" << result_10x1 << std:: endl;
+	std:: cout << "Wartosc wielomianu dla x = 2 wynosi:" << result_10x2 << std:: endl;
+
 	//Sprawdzamy czyszczenie:
 	std:: cout << "Wyswietlam pierwszy wielomian:\n ";
 	test1.clear();
