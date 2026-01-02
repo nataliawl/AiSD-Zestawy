@@ -1,7 +1,7 @@
 /* ----------------------------------------------
 Autorka: Natalia Wlodyka           Data: 28.12.25
 
-Implementacjê realizujaca wielomiany na bazie listy
+ImplementacjÃª realizujaca wielomiany na bazie listy
 pojedynczo powiazanej.
 Funkcje sa testowane w main
 -----------------------------------------------*/
@@ -92,8 +92,8 @@ public:
 	Poly operator+(const Poly& other); //Dodawanie
 	Poly operator-(const Poly& other); //Odejmowanie
 	Poly operator*(const Poly& other); //Mnozenie
-	T horner(const T& item); // Dzielenie metoda hornera
-	bool operator==(const Poly& other); // Czy równe ==
+	T horner(const T& item); // Wyliczanie wartosci wielomianu
+	bool operator==(const Poly& other); // Czy rÃ³wne ==
 	bool operator!=(const Poly& other); //Czy rozne !=
 	
 	void display(); //Wypisywanie wielomianu
@@ -104,7 +104,7 @@ public:
     [[nodiscard]] bool empty() const { return head == nullptr; }
     
     bool if_degree(int number); //Sprawdzamy czy jest juz taki wspolczynnik
-	T& operator[](int number); //odczyt wspolczynnika przy danej potêdze x
+	T& operator[](int number); //odczyt wspolczynnika przy danej potÃªdze x
 	[[nodiscard]] int get_degree() const {return degree;} //Stopien wielomiany
     void clear(); //Do  czysczenia
     
@@ -345,3 +345,4 @@ Poly<T>::~Poly() {
 }
 
 #endif
+
